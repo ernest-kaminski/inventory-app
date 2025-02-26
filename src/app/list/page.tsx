@@ -1,7 +1,8 @@
 "use client"
 
-import { devices } from "@/testData/DeviceData"
-import { columns } from "../../testData/DeviceColumns"
+import { useEffect, useState } from 'react';
+import { columns } from "../../components/data-table/DeviceColumns"
+import { IDevice } from '@/models/Device';
 
 import {
   ColumnDef,
@@ -82,8 +83,25 @@ export function DataTable<TData, TValue>({
   )
 }
 
+
 export default function ListPage() {
+  const [devices, setDevices] = useState<IDevice[]>([]);
+
+  const fetchProducts = async () => {
+    const res = await fetch('/api/devices');
+    const data = await res.json();
+    setDevices(data);
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
     return (
+      <div className='flex flex-col'>
         <DataTable columns={columns} data={devices} />
+
+      </div>
+
     );
   }

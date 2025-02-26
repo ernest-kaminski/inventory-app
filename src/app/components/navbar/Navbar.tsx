@@ -12,7 +12,7 @@ const labels = {
 
 const slugs = {
     offer: "/list",
-    order: "/order",
+    order: "/add-device",
     contact: "/contact"
 }
 
