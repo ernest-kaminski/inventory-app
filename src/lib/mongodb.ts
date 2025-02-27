@@ -13,10 +13,6 @@ if (!cached) {
 }
 
 async function connectToDatabase() {
-<<<<<<< HEAD
-=======
-  console.log(MONGODB_URI)
->>>>>>> 3410cdcc51737dbba69a79e2b5d0b19454463695
   if (cached.conn) {
     return cached.conn;
   }
@@ -31,8 +27,4 @@ async function connectToDatabase() {
   return cached.conn;
 }
 
-<<<<<<< HEAD
 export default connectToDatabase;
-=======
-export default connectToDatabase;
->>>>>>> 3410cdcc51737dbba69a79e2b5d0b19454463695
