@@ -12,7 +12,7 @@ const labels = {
 
 const slugs = {
     offer: "/list",
-    order: "/order",
+    order: "/add-device",
     contact: "/contact"
 }
 
@@ -32,9 +32,9 @@ export function Navbar(){
                     <div className="md:invisible w-8 h-8 hover:cursor-pointer">
                         <MenuIcon className="size-8 align-center" onClick={() => setMobileMenuActive(!mobileMenuActive)}/>
                     </div>
-                    <Link href={slugs.offer} className="h-full w-0 md:w-auto invisible content-center md:visible hover:text-primary transition">{labels.offer}</Link>
-                    <Link href={slugs.order} className="h-full w-0 md:w-auto invisible content-center md:visible hover:text-primary transition">{labels.order}</Link>
-                    <Link href={slugs.contact} className="h-full w-0 md:w-auto invisible content-center md:visible hover:text-primary transition">{labels.contact}</Link>
+                    <Link href={slugs.offer} className="h-full w-0 md:w-auto invisible content-center md:visible hover:text-primary transition ease-in-out hover:text-white">{labels.offer}</Link>
+                    <Link href={slugs.order} className="h-full w-0 md:w-auto invisible content-center md:visible hover:text-primary transition ease-in-out hover:text-white">{labels.order}</Link>
+                    <Link href={slugs.contact} className="h-full w-0 md:w-auto invisible content-center md:visible hover:text-primary transition ease-in-out hover:text-white">{labels.contact}</Link>
                 </nav>
             </header>
 

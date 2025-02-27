@@ -13,6 +13,10 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.475.0",
+<<<<<<< HEAD
+=======
+    "mongodb": "^6.13.1",
+>>>>>>> 3410cdcc51737dbba69a79e2b5d0b19454463695
     "mongoose": "^8.10.2",
     "next": "15.1.7",
     "react": "^19.0.0",
