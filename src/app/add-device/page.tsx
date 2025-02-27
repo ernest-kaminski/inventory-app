@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Input from '../components/Input';
+import { TDevice } from '@/types/types';
+
 
 export default function AddDevicePage(){
   const [serialNumber, setSerialNumber] = useState<string>('')

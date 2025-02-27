@@ -8,6 +8,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  Row,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -23,6 +24,10 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+}
+
+const getDetails = (e: string) => {
+  console.log(e)
 }
 
 export function DataTable<TData, TValue>({
@@ -59,7 +64,8 @@ export function DataTable<TData, TValue>({
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow
+              <TableRow className='hover:cursor-pointer'
+                onClick={ () => console.log(row.original._id)}
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
@@ -73,7 +79,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                Brak wyników.
               </TableCell>
             </TableRow>
           )}
@@ -97,10 +103,13 @@ export default function ListPage() {
     fetchProducts();
   }, []);
 
-    return (
-      <div className='flex flex-col'>
-        <DataTable columns={columns} data={devices} />
+useEffect(() => {
+  console.log(devices)
+},[devices])
 
+    return (
+      <div className='flex w-full justify-center items-center'>
+          <DataTable columns={columns} data={devices} />
       </div>
 
     );
