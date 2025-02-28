@@ -3,12 +3,14 @@
 import { useEffect, useState } from 'react';
 import { columns } from "../../components/data-table/DeviceColumns"
 import { IDevice } from '@/models/Device';
+import './list.css'
 
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
   Row,
+  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -33,12 +35,25 @@ const getDetails = (e: string) => {
 export function DataTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+  onFlip
+}: DataTableProps<TData, TValue> & {onFlip: () => void}) {
+
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 15, // domyślnie 10 wierszy na stronę
+  });
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    state: {
+      pagination,
+    },
+    onPaginationChange: setPagination,
   })
+
 
   return (
     <div className="rounded-md border">
@@ -46,6 +61,7 @@ export function DataTable<TData, TValue>({
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
+              <TableHead key={'lp'}>L.P.</TableHead>
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id}>
@@ -63,12 +79,13 @@ export function DataTable<TData, TValue>({
         </TableHeader>
         <TableBody>
           {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
+            table.getRowModel().rows.map((row, index) => (
               <TableRow className='hover:cursor-pointer'
-                onClick={ () => console.log(row.original._id)}
+                onClick={() =>onFlip()}
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
+                <TableCell key={index}>{index + 1 + (table.getState().pagination.pageIndex * pagination.pageSize)}</TableCell>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -85,13 +102,33 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-    </div>
+        <div className="flex items-center justify-end space-x-2 py-4">
+          <button
+
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            Previous
+          </button>
+          <button
+
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    
   )
 }
 
 
 export default function ListPage() {
   const [devices, setDevices] = useState<IDevice[]>([]);
+  const [isFlipped, setFlipped] = useState<boolean>(false)
+  const [contentAnimTriggered, setContentAnimTriggered] = useState<boolean>(false)
+  const [isFirstRender, setFirstRender] = useState<boolean>(true)
 
   const fetchProducts = async () => {
     const res = await fetch('/api/devices');
@@ -99,18 +136,39 @@ export default function ListPage() {
     setDevices(data);
   };
 
+
+
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    if(!isFirstRender){
+      setTimeout(() => {
+        setContentAnimTriggered(!contentAnimTriggered)
+      }, 400)
+    }else{
+      setFirstRender(false)
+    }
+    console.log(isFlipped)
+  }, [isFlipped])
 
 useEffect(() => {
   console.log(devices)
 },[devices])
 
     return (
-      <div className='flex w-full justify-center items-center'>
-          <DataTable columns={columns} data={devices} />
+      <div className={`flex w-full justify-center items-center content-container ${isFlipped ? 'is-flipped' : ''}`}>
+        <div className='card-inner'>
+        {
+          contentAnimTriggered ? 
+          <div className='card-back'></div>
+          :
+          <div className='card-front'>
+            <DataTable columns={columns} data={devices} onFlip={() => setFlipped(!isFlipped)}/>
+          </div>
+        }
+        </div>
       </div>
-
     );
   }

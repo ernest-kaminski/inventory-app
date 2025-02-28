@@ -45,7 +45,7 @@ export function Navbar(){
                     <Link href={slugs.contact} onClick={() => setMobileMenuActive(!mobileMenuActive)} className="visible md:invisible w-full relative text-center text-2xl py-4 px-4 bg-gray-400 hover:bg-gray-300 transition border-b-2 z-10">{labels.contact}</Link>
                 </nav>
             </section>
-            <div className="h-[120px]"></div>
+            <div className="h-[80px] pt-[50px] mb-[10px] flex justify-center text-2xl font-bold">Lista urządzeń</div>
         </div>
     )
 }
