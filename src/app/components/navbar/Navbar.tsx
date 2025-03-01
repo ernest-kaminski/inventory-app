@@ -21,7 +21,7 @@ export function Navbar(){
 
     return(
         <div className="flex flex-col">
-            <header className="flex fixed top-0 py-2 shadow-xl w-full z-10 bg-gray-300 justify-center">
+            <header className="flex fixed top-0 shadow-xl w-full z-10 bg-gray-300 justify-center">
                 <div className="flex flex-row gap-2 items-center ml-6 md:ml-32">
                     <Link href='/'>
                         <AppIcon className="size-24"/>
@@ -45,7 +45,7 @@ export function Navbar(){
                     <Link href={slugs.contact} onClick={() => setMobileMenuActive(!mobileMenuActive)} className="visible md:invisible w-full relative text-center text-2xl py-4 px-4 bg-gray-400 hover:bg-gray-300 transition border-b-2 z-10">{labels.contact}</Link>
                 </nav>
             </section>
-            <div className="h-[80px] pt-[50px] mb-[10px] flex justify-center text-2xl font-bold">Lista urządzeń</div>
+            <div className="h-[60px] pt-[50px] mb-[10px]" />
         </div>
     )
 }

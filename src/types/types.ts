@@ -1,9 +1,21 @@
 export type THTTPMethod = 'GET' | 'OPTIONS' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
+export type TAdditionalNumbers = {
+    label: string
+    value: string
+}
+
 export type TDevice = {
     serialNumber: string
     deviceType: "Urządzenie elektroniczne" | "AGD" | "Materiał budowlany"
     date: string
+}
+
+export type TDeviceDetails = TDevice & {
+    buyPrice?: number
+    buyDate?: string
+    additionalNumbers?: TAdditionalNumbers[]
+    performerUser?: string
 }
 
 

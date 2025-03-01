@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { columns } from "../../components/data-table/DeviceColumns"
 import { IDevice } from '@/models/Device';
-import './list.css'
 
 import {
   ColumnDef,
@@ -108,14 +107,14 @@ export function DataTable<TData, TValue>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            Poprzednie
           </button>
           <button
 
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            następne
           </button>
         </div>
       </div>
@@ -136,8 +135,6 @@ export default function ListPage() {
     setDevices(data);
   };
 
-
-
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -153,21 +150,20 @@ export default function ListPage() {
     console.log(isFlipped)
   }, [isFlipped])
 
-useEffect(() => {
-  console.log(devices)
-},[devices])
 
     return (
-      <div className={`flex w-full justify-center items-center content-container ${isFlipped ? 'is-flipped' : ''}`}>
-        <div className='card-inner'>
-        {
-          contentAnimTriggered ? 
-          <div className='card-back'></div>
-          :
-          <div className='card-front'>
-            <DataTable columns={columns} data={devices} onFlip={() => setFlipped(!isFlipped)}/>
+      <div className='w-full flex flex-row justify-center'>
+        <div className={`flex content-container ${isFlipped ? 'is-flipped' : ''}`}>
+          <div className='card-inner'>
+          {
+            contentAnimTriggered ? 
+            <div className='card-back'></div>
+            :
+            <div className='card-front'>
+              <DataTable columns={columns} data={devices} onFlip={() => setFlipped(!isFlipped)}/>
+            </div>
+          }
           </div>
-        }
         </div>
       </div>
     );
