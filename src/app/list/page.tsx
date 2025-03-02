@@ -21,21 +21,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { IDeviceDetails } from '@/models/DeviceDetails';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-const getDetails = (e: string) => {
-  console.log(e)
-}
-
 export function DataTable<TData, TValue>({
   columns,
   data,
-  onFlip
-}: DataTableProps<TData, TValue> & {onFlip: () => void}) {
+  onFlip,
+}: DataTableProps<TData, TValue> & {onFlip: (x: string) => void}) {
 
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -80,7 +77,7 @@ export function DataTable<TData, TValue>({
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row, index) => (
               <TableRow className='hover:cursor-pointer'
-                onClick={() =>onFlip()}
+                onClick={async () => {onFlip(row.original._id)}}
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
@@ -135,6 +132,16 @@ export default function ListPage() {
     setDevices(data);
   };
 
+  const getDeviceDetails = async (id: string) => {
+    const res = await fetch(`/api/device-details/${id}`, {
+      method: 'GET',
+    }).then((data) => data.json()).then((x) => setDeviceDetails(x));
+  }
+
+  const setDeviceDetails = (deviceDetails: IDeviceDetails) => {
+      console.log(deviceDetails)
+  }
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -147,7 +154,6 @@ export default function ListPage() {
     }else{
       setFirstRender(false)
     }
-    console.log(isFlipped)
   }, [isFlipped])
 
 
@@ -160,7 +166,7 @@ export default function ListPage() {
             <div className='card-back'></div>
             :
             <div className='card-front'>
-              <DataTable columns={columns} data={devices} onFlip={() => setFlipped(!isFlipped)}/>
+              <DataTable columns={columns} data={devices} onFlip={(x: string) => {setFlipped(!isFlipped); getDeviceDetails(x)}} />
             </div>
           }
           </div>

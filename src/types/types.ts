@@ -1,3 +1,5 @@
+import { StringExpressionOperatorReturningNumber } from "mongoose";
+
 export type THTTPMethod = 'GET' | 'OPTIONS' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 export type TAdditionalNumbers = {
@@ -5,7 +7,15 @@ export type TAdditionalNumbers = {
     value: string
 }
 
+export type TLocalization = {
+    address: string
+    city?: string
+    building?: string 
+    room?: string 
+}
+
 export type TDevice = {
+    _id?: StringExpressionOperatorReturningNumber
     serialNumber: string
     deviceType: "Urządzenie elektroniczne" | "AGD" | "Materiał budowlany"
     date: string
@@ -16,6 +26,7 @@ export type TDeviceDetails = TDevice & {
     buyDate?: string
     additionalNumbers?: TAdditionalNumbers[]
     performerUser?: string
+    localization: TLocalization
 }
 
 
@@ -121,3 +132,171 @@ export const devices: TDevice[] = [
     { serialNumber: "MTR-099", deviceType: "Materiał budowlany", date: "2024-08-12" },
     { serialNumber: "ELX-100", deviceType: "Urządzenie elektroniczne", date: "2023-11-07" }
 ];
+
+
+export const devicesWithDetails: TDeviceDetails[] = [
+    {
+      serialNumber: "SN001",
+      deviceType: "Urządzenie elektroniczne",
+      date: "2022-02-15",
+      buyPrice: 1200,
+      buyDate: "2022-02-10",
+      additionalNumbers: [
+        { label: "AltNumber1", value: "AN001" },
+        { label: "AltNumber2", value: "AN002" }
+      ],
+      performerUser: "John Doe",
+      localization: {
+        address: "Main Street 123",
+        city: "Warsaw",
+        building: "12",
+        room: "A4"
+      }
+    },
+    {
+      serialNumber: "SN002",
+      deviceType: "AGD",
+      date: "2023-05-22",
+      buyPrice: 600,
+      buyDate: "2023-05-15",
+      additionalNumbers: undefined,
+      performerUser: "Jane Smith",
+      localization: {
+        address: "High Street 45",
+        city: "Krakow",
+        building: "5"
+      }
+    },
+    {
+      serialNumber: "SN003",
+      deviceType: "Materiał budowlany",
+      date: "2021-11-10",
+      buyPrice: undefined,
+      buyDate: undefined,
+      additionalNumbers: [
+        { label: "AltNumber1", value: "AN003" }
+      ],
+      performerUser: undefined,
+      localization: {
+        address: "Industrial Park",
+        city: "Gdansk",
+        building: undefined,
+        room: undefined
+      }
+    },
+    {
+      serialNumber: "SN004",
+      deviceType: "Urządzenie elektroniczne",
+      date: "2024-03-12",
+      buyPrice: 850,
+      buyDate: "2024-03-10",
+      additionalNumbers: [],
+      performerUser: "Adam Kowalski",
+      localization: {
+        address: "Office Street 22",
+        city: "Poznan",
+        building: "3A",
+        room: "102"
+      }
+    },
+    {
+      serialNumber: "SN006",
+      deviceType: "Materiał budowlany",
+      date: "2020-10-05",
+      buyPrice: 450,
+      buyDate: "2020-09-30",
+      additionalNumbers: [
+        { label: "AltNumber4", value: "AN004" }
+      ],
+      performerUser: "Maria Nowak",
+      localization: {
+        address: "Building Supplies St.",
+        city: "Lodz",
+        building: "2",
+        room: "B1"
+      }
+    },
+    {
+      serialNumber: "SN007",
+      deviceType: "Urządzenie elektroniczne",
+      date: "2021-12-15",
+      buyPrice: 1500,
+      buyDate: "2021-12-10",
+      additionalNumbers: [
+        { label: "AltNumber5", value: "AN005" }
+      ],
+      performerUser: undefined,
+      localization: {
+        address: "Tech Park",
+        building: "Tech1",
+        room: "Lab2"
+      }
+    },
+    {
+      serialNumber: "SN008",
+      deviceType: "AGD",
+      date: "2022-09-22",
+      buyPrice: 400,
+      buyDate: "2022-09-20",
+      additionalNumbers: [],
+      performerUser: "Paulina Szymańska",
+      localization: {
+        address: "Downtown",
+        city: "Wroclaw",
+        building: "22B",
+        room: "Room 5"
+      }
+    },
+    {
+      serialNumber: "SN009",
+      deviceType: "Materiał budowlany",
+      date: "2021-05-10",
+      buyPrice: undefined,
+      buyDate: "2021-05-07",
+      additionalNumbers: undefined,
+      performerUser: "Anna Zielińska",
+      localization: {
+        address: "Warehouse Complex",
+        building: "5",
+        room: undefined
+      }
+    },
+    {
+      serialNumber: "SN010",
+      deviceType: "Urządzenie elektroniczne",
+      date: "2020-12-25",
+      buyPrice: 2500,
+      buyDate: "2020-12-20",
+      additionalNumbers: [
+        { label: "AltNumber6", value: "AN006" }
+      ],
+      performerUser: "Krzysztof Malinowski",
+      localization: {
+        address: "Innovation Blvd",
+        city: "Gdynia",
+        building: "7",
+        room: "Lab1"
+      }
+    }
+  ];
+  
+
+/*
+  for (let i = 11; i <= 100; i++) {
+    devicesWithDetails.push({
+      serialNumber: `SN00${i}`,
+      deviceType: i % 3 === 0 ? "Urządzenie elektroniczne" : i % 2 === 0 ? "AGD" : "Materiał budowlany",
+      date: `202${i % 5 + 1}-0${i % 9 + 1}-${i % 28 + 1}`,
+      buyPrice: i % 5 === 0 ? undefined : 500 + i * 10,
+      buyDate: i % 7 === 0 ? undefined : `202${i % 5 + 1}-0${i % 9 + 1}-${i % 28 + 1}`,
+      additionalNumbers: i % 3 === 0 ? [{ label: `AltNumber${i}`, value: `AN00${i}` }] : undefined,
+      performerUser: i % 4 === 0 ? undefined : `User ${i}`,
+      localization: {
+        address: `Street ${i}`,
+        city: i % 4 === 0 ? '' : `City ${i}`,
+        building: i % 3 === 0 ? '' : `Building ${i}`,
+        room: i % 5 === 0 ? '' : `Room ${i}`
+      }
+    });
+  }
+  */

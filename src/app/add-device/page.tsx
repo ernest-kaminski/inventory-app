@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Input from '../components/Input';
-import { TAdditionalNumbers, TDevice } from '@/types/types';
+import { TAdditionalNumbers, TDevice, devicesWithDetails } from '@/types/types';
 
 
 export default function AddDevicePage(){
