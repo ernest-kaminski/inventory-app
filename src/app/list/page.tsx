@@ -39,6 +39,24 @@ export function DataTable<TData, TValue>({
     pageSize: 15, // domyślnie 10 wierszy na stronę
   });
 
+  const [lastPage, setLastPage] = useState<boolean>(false)
+  const [firstPage, setFirstPage] = useState<boolean>(true)
+
+  useEffect(() => {
+    if(pagination.pageIndex != 0){
+      setFirstPage(false)
+    }else{
+      setFirstPage(true)
+    }
+
+    if(pagination.pageIndex + 1 == table.getPageCount())
+    {
+      setLastPage(true)
+    }else{
+      setLastPage(false)
+    }
+  }, [pagination.pageIndex])
+
   const table = useReactTable({
     data,
     columns,
@@ -52,7 +70,7 @@ export function DataTable<TData, TValue>({
 
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -100,14 +118,14 @@ export function DataTable<TData, TValue>({
       </Table>
         <div className="flex items-center justify-end space-x-2 py-4">
           <button
-
+            className={firstPage ? 'text-gray-400' : ''}
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Poprzednie
+            Poprzednie 
           </button>
           <button
-
+            className={lastPage ? 'text-gray-400' :  ''}
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
